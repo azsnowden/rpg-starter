@@ -7,16 +7,54 @@ In this simple RPG game, the hero fights the goblin. He has the options to:
 
 """
 
-def main():
-    hero_health = 10
-    hero_power = 5
-    goblin_health = 6
-    goblin_power = 2
+class Character():
+    def __init__(self, name, health, power,alive):
+        self.name = name
+        self.health = health
+        self.power = power
+    def alive(self):
+        return self.health > 0
 
-    while goblin_health > 0 and hero_health > 0:
-        print("You have %d health and %d power." % (hero_health, hero_power))
-        print("The goblin has %d health and %d power." % (goblin_health, goblin_power))
-        print()
+class Hero(Character):
+    def __init__(self, name, health, power, alive):
+            super().__init__(name, health, power, alive)
+
+    def attack(self):
+        goblin1.health -= hero1.power
+        print("You do %d damage to the goblin." % hero1.power)
+        if goblin1.health <= 0:
+            print("The goblin is dead.")
+    
+    def print_status(self):
+        print("You have %d health and %d power." % (hero1.health, hero1.power))
+        if hero1.health <= 0:
+                print("You are dead.")
+        else:
+            print("You are alive!")
+
+
+class Goblin(Character):
+    def __init__(self, name, health, power, alive):
+            super().__init__(name, health, power, alive)
+
+    def attack(self):
+        hero1.health -= goblin1.power
+        print("The goblin does %d damage to you." % goblin1.power)
+        if hero1.health <= 0:
+            print("You are dead.")
+    
+    def print_status(self):
+        print("The goblin has %d health and %d power." % (goblin1.health, goblin1.power))
+        if goblin1.health <= 0:
+                print("Goblin is dead.")
+        else:
+            print("Goblin is alive!")
+            
+
+
+def main():
+    while goblin1.alive() and hero1.alive() == True:
+
         print("What do you want to do?")
         print("1. fight goblin")
         print("2. do nothing")
@@ -25,23 +63,20 @@ def main():
         user_input = input()
         if user_input == "1":
             # Hero attacks goblin
-            goblin_health -= hero_power
-            print("You do %d damage to the goblin." % hero_power)
-            if goblin_health <= 0:
-                print("The goblin is dead.")
+            hero1.attack()
+            print(hero1.print_status())
+            print(goblin1.print_status())
         elif user_input == "2":
             pass
         elif user_input == "3":
             print("Goodbye.")
-            break
+        
         else:
             print("Invalid input %r" % user_input)
-
-        if goblin_health > 0:
+        if goblin1.health > 0:
             # Goblin attacks hero
-            hero_health -= goblin_power
-            print("The goblin does %d damage to you." % goblin_power)
-            if hero_health <= 0:
-                print("You are dead.")
+            goblin1.attack()
 
+hero1 = Hero('Captain', 10, 5, True)
+goblin1 = Goblin('Bo-Bo', 6, 2, True)
 main()
